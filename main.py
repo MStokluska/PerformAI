@@ -2,7 +2,7 @@ from performai.config import NAMESPACES, CHUNK_SIZE
 from performai.collect import get_k8s_workloads, get_usage_metrics
 from performai.utils import chunk_workloads
 from performai.prompts import generate_prompt
-from performai.llm import call_local_llm
+from performai.llm import call_llm
 import json
 
 
@@ -18,7 +18,7 @@ def main():
     recommendations = []
     for chunk in chunk_workloads(all_workloads, CHUNK_SIZE):
         prompt = generate_prompt(chunk)
-        chunk_recs = call_local_llm(prompt)
+        chunk_recs = call_llm(prompt)
         recommendations.extend(chunk_recs)
 
     print("\nRecommendations:")
