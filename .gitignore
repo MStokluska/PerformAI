@@ -1,7 +1,11 @@
 # Python virtual environments
 venv/
+venv-setup/
 .env/
 .venv/
 # Python cache
 __pycache__/
 *.py[cod]
+# Notebooks
+setup/.ipynb_checkpoints
+.ipynb_checkpoints

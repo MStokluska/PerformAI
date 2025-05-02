@@ -14,8 +14,8 @@
 
 ## 📦 Requirements
 - Python 3.9+
-- Prometheus endpoint accessible
-- `kubectl` configured and authenticated
+- Prometheus endpoint accessible (you can follow [Prometheus Setup](#prometheus-setup-optional) to setup prometheus via Jupyter Notebook)
+- `kubectl` and `oc` configured and authenticated
 - [Ollama](https://ollama.com/) running locally with the `mistral` model:
   ```bash
   ollama run mistral
@@ -58,6 +58,26 @@ LLM_MODEL=model-name \
 python main.py
 ```
 
+## ⚙️ Prometheus Setup (Optional)
+If your cluster does not yet have Prometheus installed or configured, you can use the interactive Jupyter notebook provided to set it up:
+
+```bash
+python3 -m venv venv-setup
+source venv-setup/bin/activate
+pip install notebook
+jupyter notebook setup/prometheus_setup.ipynb
+```
+
+The notebook will:
+- Detect your current namespace and OpenShift domain
+- Install Prometheus Operator on current namespace
+- Create the necessary RBAC and scrape configurations
+- Deploy Prometheus CR
+- Provide an external route to access Prometheus UI
+
+> Note: You need `oc` and sufficient cluster permissions to run this notebook on OpenShift.
+
+
 ---
 
 ## 🌐 Available Environment Variables
@@ -82,6 +102,8 @@ performai/
 ├── llm.py
 ├── utils.py          
 main.py
+setup/
+└── prometheus_setup.ipynb
 ```
 
 ---
