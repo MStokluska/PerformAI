@@ -41,9 +41,8 @@ def main():
         chunk_recs = call_llm(prompt)
         recommendations.extend(chunk_recs)
 
-    print("Recommendations generated:", recommendations)
+    #print(recommendations)
     print(json.dumps(recommendations, indent=2))
-
 
     # Get the JSON output from the buffer
     json_output = sys.stdout.getvalue()

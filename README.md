@@ -61,6 +61,15 @@ LLM_API_TOKEN=your-token-here \
 LLM_MODEL=model-name \
 python main.py
 ```
+For web UI
+```bash
+python app.py
+```
+served on localhost:5000
+
+![UI screen](./img/performAI.png)
+
+![UI results](./img/Results.png)
 
 ---
 

@@ -67,26 +67,8 @@ def index():
 def status():
     return jsonify({'running': analysis_running, 'results': analysis_results.get('output'), 'error': analysis_results.get('error', False)})
 
-@app.route('/results')
-def results():
-    results_output = analysis_results.get('output')
-    error_status = analysis_results.get('error', False)
-    recommendations = None
-    error_message = None
-
-    if error_status:
-        error_message = results_output
-    elif results_output:
-        try:
-            recommendations = json.loads(results_output)
-        except json.JSONDecodeError:
-            error_message = f"Error decoding JSON output: {results_output}"
-
-    return render_template('results.html', recommendations=recommendations, error=error_message)
-
 # @app.route('/results')
 # def results():
-#     print("Analysis Results in /results route:", analysis_results)
 #     results_output = analysis_results.get('output')
 #     error_status = analysis_results.get('error', False)
 #     recommendations = None
@@ -101,6 +83,24 @@ def results():
 #             error_message = f"Error decoding JSON output: {results_output}"
 #
 #     return render_template('results.html', recommendations=recommendations, error=error_message)
+
+@app.route('/results')
+def results():
+    print("Analysis Results in /results route:", analysis_results)
+    results_output = analysis_results.get('output')
+    error_status = analysis_results.get('error', False)
+    recommendations = None
+    error_message = None
+
+    if error_status:
+        error_message = results_output
+    elif results_output:
+        try:
+            recommendations = json.loads(results_output)
+        except json.JSONDecodeError:
+            error_message = f"Error decoding JSON output: {results_output}"
+
+    return render_template('results.html', recommendations=recommendations, error=error_message)
 
 if __name__ == '__main__':
     app.run(debug=True)
