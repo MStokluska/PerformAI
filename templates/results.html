@@ -9,7 +9,13 @@
 <body>
     <div class="container mt-5">
         <h1>PerformAI Recommendations</h1>
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% elif recommendations %}
         <pre>{{ recommendations|tojson(indent=2) }}</pre>
+        {% else %}
+        <p>Analysis in progress or no results yet. <a href="/">Go Back to Set Namespaces</a> to run again.</p>
+        {% endif %}
         <a href="/" class="btn btn-secondary mt-3">Go Back to Set Namespaces</a>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

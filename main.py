@@ -8,6 +8,7 @@ import os
 import sys
 
 def main():
+    print("Main.py ran")
     # Store the original stdout
     original_stdout = sys.stdout
 
@@ -40,7 +41,9 @@ def main():
         chunk_recs = call_llm(prompt)
         recommendations.extend(chunk_recs)
 
+    print("Recommendations generated:", recommendations)
     print(json.dumps(recommendations, indent=2))
+
 
     # Get the JSON output from the buffer
     json_output = sys.stdout.getvalue()
@@ -61,5 +64,5 @@ def main():
         print(f"DEBUG: {DEBUG}", file=sys.stderr)
         sys.stderr.flush()
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+     main()
