@@ -65,6 +65,25 @@
                     <label for="prometheus_url">PROMETHEUS URL</label>
                     <input type="text" class="form-control" id="prometheus_url" name="prometheus_url" value="{{ prometheus_url_input }}">
                 </div>
+                <div class="form-group">
+                    <label for="llm_hosted_url">LLM Hosted URL (Optional)</label>
+                    <input type="text" class="form-control" id="llm_hosted_url" name="llm_hosted_url" value="{{ llm_hosted_url_input }}">
+                    <small class="form-text text-muted">If using a hosted LLM, provide the URL.</small>
+                </div>
+                <div class="form-group">
+                    <label for="llm_api_token">LLM API Token (Optional)</label>
+                    <input type="text" class="form-control" id="llm_api_token" name="llm_api_token" value="{{ llm_api_token_input }}">
+                    <small class="form-text text-muted">If using a hosted LLM, provide the API token.</small>
+                </div>
+                 <div class="form-group">
+                    <label for="llm_model">LLM Model Name (Optional, default: mistral)</label>
+                    <input type="text" class="form-control" id="llm_model" name="llm_model" value="{{ llm_model_input }}">
+                    <small class="form-text text-muted">Specify the LLM model to use (e.g., mistral, llama2).</small>
+                </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="use_local_llm" name="use_local_llm" {% if use_local_llm %}checked{% endif %}>
+                    <label class="form-check-label" for="use_local_llm">Use Local LLM</label>
+                </div>
                 <button type="submit" class="btn btn-primary">Run PerformAI</button>
             </form>
         </div>

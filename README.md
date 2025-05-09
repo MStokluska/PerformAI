@@ -68,7 +68,7 @@ python app.py
 served on localhost:5000
 
 ![UI screen](./img/performAI.png)
-
+![UI processing](./img/processing.png)
 ![UI results](./img/Results.png)
 
 ---
