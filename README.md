@@ -65,7 +65,7 @@ If your cluster does not yet have Prometheus installed or configured, you can us
 python3 -m venv venv-setup
 source venv-setup/bin/activate
 pip install notebook
-jupyter notebook setup/prometheus_setup.ipynb
+jupyter notebook setup/prometheus-setup.ipynb
 ```
 
 The notebook will:
