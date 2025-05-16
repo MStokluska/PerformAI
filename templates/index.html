@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PerformAI Configuration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        function checkStatus() {
+            fetch('/status')
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.running && data.results) {
+                        window.location.href = '/results';
+                    } else if (data.running) {
+                        document.getElementById('status').innerText = 'Analysis running...';
+                        setTimeout(checkStatus, 1000); // Check every 1 second
+                    } else if (!data.running && data.error) {
+                        window.location.href = '/results'; // Redirect to show error
+                    }
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const runButton = document.querySelector('button[type="submit"]');
+            if (runButton) {
+                runButton.addEventListener('click', function() {
+                    document.getElementById('status-container').style.display = 'block';
+                    document.getElementById('analysis-form').style.display = 'none';
+                    checkStatus();
+                });
+            }
+            if ({{ analysis_running|lower }}) {
+                document.getElementById('status-container').style.display = 'block';
+                document.getElementById('analysis-form').style.display = 'none';
+                checkStatus();
+            }
+        });
+    </script>
+    <style>
+        #status-container {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>PerformAI Configuration</h1>
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+        <div id="analysis-form">
+            <form method="POST">
+                <div class="form-group">
+                    <label for="namespaces">NAMESPACES (comma-separated)</label>
+                    <input type="text" class="form-control" id="namespaces" name="namespaces" value="{{ namespaces_input }}">
+                    <small class="form-text text-muted">Enter Kubernetes namespaces separated by commas.</small>
+                </div>
+                <div class="form-group">
+                    <label for="prometheus_url">PROMETHEUS URL</label>
+                    <input type="text" class="form-control" id="prometheus_url" name="prometheus_url" value="{{ prometheus_url_input }}">
+                </div>
+                <div class="form-group">
+                    <label for="llm_hosted_url">LLM Hosted URL (Optional)</label>
+                    <input type="text" class="form-control" id="llm_hosted_url" name="llm_hosted_url" value="{{ llm_hosted_url_input }}">
+                    <small class="form-text text-muted">If using a hosted LLM, provide the URL.</small>
+                </div>
+                <div class="form-group">
+                    <label for="llm_api_token">LLM API Token (Optional)</label>
+                    <input type="password" class="form-control" id="llm_api_token" name="llm_api_token" value="{{ llm_api_token_input }}">
+                    <small class="form-text text-muted">If using a hosted LLM, provide the API token.</small>
+                </div>
+                 <div class="form-group">
+                    <label for="llm_model">LLM Model Name (Optional, default: mistral)</label>
+                    <input type="text" class="form-control" id="llm_model" name="llm_model" value="{{ llm_model_input }}">
+                    <small class="form-text text-muted">Specify the LLM model to use (e.g., mistral, llama2).</small>
+                </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="use_local_llm" name="use_local_llm" {% if use_local_llm %}checked{% endif %}>
+                    <label class="form-check-label" for="use_local_llm">Use Local LLM</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Run PerformAI</button>
+            </form>
+        </div>
+        <div id="status-container">
+            <p>Analysis in progress...</p>
+            <div id="status"></div>
+        </div>
+        {% if results %}
+        <div class="mt-3">
+            <h2>Previous Results:</h2>
+            <pre>{{ results }}</pre>
+        </div>
+        {% endif %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

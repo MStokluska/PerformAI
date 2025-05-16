@@ -36,10 +36,14 @@ pip install -r requirements.txt
 ---
 
 ## 🛠 Configuration
-Edit `performai/config.py` to set:
-- Target namespaces
-- Prometheus endpoint
-- Lookback window for metrics
+Set the environment variables 
+```commandline
+export NAMESPACES="namespace1,namespace2,another-namespace"
+export PROMETHEUS_URL="https://your-prometheus.example.com"
+export LOOKBACK_DURATION="7d"
+export CHUNK_SIZE="10"
+export DEBUG="True"
+```
 
 ---
 
@@ -57,6 +61,15 @@ LLM_API_TOKEN=your-token-here \
 LLM_MODEL=model-name \
 python main.py
 ```
+For web UI
+```bash
+python app.py
+```
+served on localhost:5000
+
+![UI screen](./img/performAI.png)
+![UI processing](./img/processing.png)
+![UI results](./img/Results.png)
 
 ---
 
