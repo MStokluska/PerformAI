@@ -1,4 +1,4 @@
-from performai.config import NAMESPACES, CHUNK_SIZE, DEBUG
+from performai.config import NAMESPACES, CHUNK_SIZE, DEBUG, LLM_HOSTED_URL, LLM_API_TOKEN, LLM_MODEL, PROMETHEUS_URL
 from performai.collect import get_k8s_workloads, get_usage_metrics
 from performai.utils import chunk_workloads
 from performai.prompts import generate_prompt
@@ -22,7 +22,7 @@ def main():
     else:
         namespaces = NAMESPACES  # Fallback to config if no env var
 
-    prometheus_url = os.environ.get("PROMETHEUS_URL")
+    prometheus_url = PROMETHEUS_URL
     if not prometheus_url:
         from performai.config import PROMETHEUS_URL as DEFAULT_PROMETHEUS_URL
         prometheus_url = DEFAULT_PROMETHEUS_URL
@@ -56,10 +56,13 @@ def main():
     # Optional: Print debug info to stderr if DEBUG is True
     if DEBUG:
         print("Loaded Configuration (stderr):", file=sys.stderr)
-        print(f"NAMESPACES: {namespaces}", file=sys.stderr)
-        print(f"PROMETHEUS_URL: {prometheus_url}", file=sys.stderr)
+        print(f"NAMESPACES: {NAMESPACES}", file=sys.stderr)
+        print(f"PROMETHEUS_URL: {PROMETHEUS_URL}", file=sys.stderr)
+        print(f"LLM_HOSTED_URL: {LLM_HOSTED_URL}", file=sys.stderr)
+        print(f"LLM_API_TOKEN: {LLM_API_TOKEN}", file=sys.stderr)
+        print(f"LLM_MODEL: {LLM_MODEL}", file=sys.stderr)
         print(f"LOOKBACK_DURATION: {os.environ.get('LOOKBACK_DURATION', '30d')}", file=sys.stderr)
-        print(f"CHUNK_SIZE: {os.environ.get('CHUNK_SIZE', '5')}", file=sys.stderr)
+        print(f"CHUNK_SIZE: {CHUNK_SIZE}", file=sys.stderr)
         print(f"DEBUG: {DEBUG}", file=sys.stderr)
         sys.stderr.flush()
 

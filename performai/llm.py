@@ -2,14 +2,7 @@ import sys
 
 import requests
 import json
-import os
-
-USE_LOCAL_LLM = os.getenv("USE_LOCAL_LLM", "true").lower() == "true"
-LLM_HOSTED_URL = os.getenv("LLM_HOSTED_URL")
-LLM_API_TOKEN = os.getenv("LLM_API_TOKEN")
-LLM_MODEL = os.getenv("LLM_MODEL", "mistral")  # default for local is "mistral"
-DEBUG = os.getenv("DEBUG", "False").lower() == "true"
-
+from performai.config import USE_LOCAL_LLM, LLM_HOSTED_URL, LLM_API_TOKEN, LLM_MODEL, DEBUG
 
 def call_local_llm(prompt: str, llm_model: str = "mistral") -> list:  # add defaults
     response = requests.post(

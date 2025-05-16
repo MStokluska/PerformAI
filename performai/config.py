@@ -4,21 +4,19 @@ import os
 DEFAULT_LOOKBACK_DURATION = "30d"
 DEFAULT_CHUNK_SIZE = 5
 DEFAULT_DEBUG = False
-#NAMESPACES = ["threescale"]
-#PROMETHEUS_URL = "http://prometheus.threescale.apps.mstoklus.giq5.s1.devshift.org/"
+DEFAULT_LLM_MODEL = "mistral"
+DEFAULT_USE_LOCAL_LLM = True
+DEFAULT_PROMETHEUS_URL = "http://prometheus.threescale.apps.mstoklus.giq5.s1.devshift.org/" # set default
 
-NAMESPACES = os.environ.get("NAMESPACES", "<TARGET_NAMESPACES>").split(',')
-PROMETHEUS_URL = os.environ.get("PROMETHEUS_URL", "<PROMETHEUS ROUTE>")
-LOOKBACK_DURATION = os.environ.get("LOOKBACK_DURATION", DEFAULT_LOOKBACK_DURATION)
-CHUNK_SIZE = int(os.environ.get("CHUNK_SIZE", DEFAULT_CHUNK_SIZE))
-DEBUG = os.environ.get("DEBUG", str(DEFAULT_DEBUG)).lower() == 'true'
+# Load from environment variables, overriding defaults if set
+NAMESPACES = os.getenv("NAMESPACES", "threescale").split(',')
+PROMETHEUS_URL = os.getenv("PROMETHEUS_URL", DEFAULT_PROMETHEUS_URL)
+LOOKBACK_DURATION = os.getenv("LOOKBACK_DURATION", DEFAULT_LOOKBACK_DURATION)
+CHUNK_SIZE = int(os.getenv("CHUNK_SIZE", str(DEFAULT_CHUNK_SIZE)))
+DEBUG = os.getenv("DEBUG", str(DEFAULT_DEBUG)).lower() == "true"
+LLM_HOSTED_URL = os.getenv("LLM_HOSTED_URL", "")  # Default to empty string
+LLM_API_TOKEN = os.getenv("LLM_API_TOKEN", "")  # Default to empty string
+LLM_MODEL = os.getenv("LLM_MODEL", DEFAULT_LLM_MODEL)
+USE_LOCAL_LLM = os.getenv("USE_LOCAL_LLM", str(DEFAULT_USE_LOCAL_LLM)).lower() == "true"
 
-# # Optional: Print the loaded configuration to verify
-# if DEBUG:
-#     print("Loaded Configuration:")
-#     print(f"NAMESPACES: {NAMESPACES}")
-#     print(f"PROMETHEUS_URL: {PROMETHEUS_URL}")
-#     print(f"LOOKBACK_DURATION: {LOOKBACK_DURATION}")
-#     print(f"CHUNK_SIZE: {CHUNK_SIZE}")
-#     print(f"DEBUG: {DEBUG}")
 
